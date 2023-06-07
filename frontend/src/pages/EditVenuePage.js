@@ -16,7 +16,7 @@ export default () => {
     };
     useEffect(() => {
         async function getVenueDetails() {
-            let response = await fetch('https://bookmyvenue.live:6969/venues/' + sessionStorage.getItem('editVenueId'), {
+            let response = await fetch('http://localhost:6969/venues/' + sessionStorage.getItem('editVenueId'), {
                 method: 'GET'
             });
             let jsonResponse = await response.json();
@@ -29,7 +29,7 @@ export default () => {
         getVenueDetails().catch(console.error);
     }, []);
     let deleteVenue = async () => {
-        let response = await fetch('https://bookmyvenue.live:6969/venues/' + sessionStorage.getItem('editVenueId'), {
+        let response = await fetch('http://localhost:6969/venues/' + sessionStorage.getItem('editVenueId'), {
             method: 'DELETE'
         });
         let jsonResponse = await response.json();
@@ -52,7 +52,7 @@ export default () => {
         const venue_category = category;
         const rating = '0';
         const availability = avail;
-        let response = await fetch('https://bookmyvenue.live:6969/venues', {
+        let response = await fetch('http://localhost:6969/venues', {
             method: 'PUT',
             body: JSON.stringify({
                 "id": sessionStorage.getItem('editVenueId'),

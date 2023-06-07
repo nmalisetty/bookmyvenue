@@ -7,10 +7,10 @@ const { Client } = require('@duosecurity/duo_universal');
 const { successResponse, errorResponse } = require('../commons/response.util');
 
 const duoClient = new Client({
-    clientId: 'DIJG5KQ4EXKE1K9LJGR1',
-    clientSecret: '0mR1NrzwVt5Apwrd2xYsfRYM7lLyUeDRc8182KCw',
-    apiHost: 'api-65f53927.duosecurity.com',
-    redirectUrl: 'https://bookmyvenue.live/profile',
+    clientId: 'CLIENT_ID_HERE',
+    clientSecret: 'API_KEY_HERE',
+    apiHost: 'URL_HERE',
+    redirectUrl: 'http://localhost:3000/profile',
 });
 
 const registerUser = async function(req, res) {

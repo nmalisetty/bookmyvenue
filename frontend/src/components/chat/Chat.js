@@ -16,7 +16,7 @@ export default function Chat() {
     const [toUser, setToUser] = useState();
     useEffect(() => {
         async function getChatUsers() {
-            let response = await fetch('https://bookmyvenue.live:6969/chats/' + sessionStorage.getItem('user_name'), {
+            let response = await fetch('http://localhost:6969/chats/' + sessionStorage.getItem('user_name'), {
                 method: 'GET'
             });
             let jsonResponse = await response.json();

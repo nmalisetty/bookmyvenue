@@ -12,7 +12,7 @@ export default () => {
     };
     return(
         <LoadScript
-            googleMapsApiKey='AIzaSyDLg2n5nrTF4PiF9zBl5v5JVmxqy8GUk9A'>
+            googleMapsApiKey='API_KEY_HERE'>
             <GoogleMap
                 mapContainerStyle={mapStyles}
                 zoom={17}

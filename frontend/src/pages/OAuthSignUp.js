@@ -60,7 +60,7 @@ export default () => {
             }
         }
         if (pass === c_pass) {
-            let response = await fetch('https://bookmyvenue.live:5000/user/register', {
+            let response = await fetch('http://localhost:5000/user/register', {
                 method: 'POST',
                 body: JSON.stringify({
                     "first_name" : f_name,

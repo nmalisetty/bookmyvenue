@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 export default () => {
     const [profile, setProfile] = useState({});
     async function getProfile() {
-        let response = await fetch('https://bookmyvenue.live:5000/user/profile/details/' + sessionStorage.getItem('user_name'), {
+        let response = await fetch('http://localhost:5000/user/profile/details/' + sessionStorage.getItem('user_name'), {
             method: 'GET'
         });
         let jsonResponse = await response.json();
@@ -21,7 +21,7 @@ export default () => {
         let last_name = document.getElementById('last_name');
         let email = document.getElementById('email');
         let phone_no = document.getElementById('phone_no');
-        let response = await fetch('https://bookmyvenue.live:6969/venues', {
+        let response = await fetch('http://localhost:6969/venues', {
             method: 'PUT',
             body: JSON.stringify({
                 "user_name": sessionStorage.getItem('user_name'),
