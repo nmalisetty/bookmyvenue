@@ -23,7 +23,7 @@
     "react-scripts": "latest",
     "react-slick": "latest",
     "slick-carousel": "latest",
-    "styled-components": "latest",
+    "styled-components": "^5.3.10",
     "tailwindcss": "latest",
     "@headlessui/react": "latest",
     "twin.macro": "latest",
