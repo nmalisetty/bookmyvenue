@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AnimatedContainer from "../helpers/AnimatedContainer.js";
 import {Container as ContainerBase} from "../components/layouts/Layouts";
 import tw from "twin.macro";
@@ -6,9 +6,6 @@ import styled from "styled-components";
 import signupPageBg from "../images/signup-bg.png";
 import {ReactComponent as SignUpIcon} from "feather-icons/dist/icons/user-plus.svg";
 import ReCAPTCHA from "react-google-recaptcha";
-import { GoogleLogin } from "react-google-login";
-import { gapi } from "gapi-script";
-import { useNavigate } from "react-router-dom";
 import * as SignUpResponse from "../data/signup.json";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
@@ -17,8 +14,6 @@ const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
 const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
 const FormContainer = tw.div`w-full flex-1 mt-8`;
-
-const SocialButtonsContainer = tw.div`flex flex-col items-center`;
 
 const Form = tw.form`mx-auto max-w-xs`;
 const Input = tw.input`w-full max-w-xs py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5`;
@@ -39,8 +34,6 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
 `;
 
-const clientId = "CLIENT_ID_GOES_HERE";
-
 let validateAndRegister = async (e) => {
   e.preventDefault();
   let jsonResponse = SignUpResponse;
@@ -53,29 +46,6 @@ let validateAndRegister = async (e) => {
 }
 
 export default () => {
-  let navigate = useNavigate();
-  useEffect(() => {
-    const initClient = () => {
-      gapi.auth2.init({
-        clientId: clientId,
-        scope: "",
-      });
-    };
-    gapi.load("client:auth2", initClient);
-  });
-  const onSuccess = (res) => {
-    navigate("/oauth", {
-      state: {
-        email: res.profileObj.email,
-        l_name: res.profileObj.familyName,
-        f_name: res.profileObj.givenName,
-        u_name: res.profileObj.email,
-      },
-    });
-  };
-  const onFailure = (res) => {
-    alert("Failed to sign up with Google");
-  };
   const headingText = "Sign Up",
       signupPageBgSrc = signupPageBg,
       submitButtonText = "Sign Up",
@@ -91,18 +61,6 @@ export default () => {
               <MainContent>
                 <Heading>{headingText}</Heading>
                 <FormContainer>
-                  <SocialButtonsContainer>
-                    <GoogleLogin
-                        clientId={clientId}
-                        buttonText="Sign up with Google"
-                        onSuccess={onSuccess}
-                        onFailure={onFailure}
-                        cookiePolicy="single_host_origin"
-                        style={{textAlign: 'center'}}
-                        class="btn btn-primary"
-                        theme="dark"
-                    />
-                  </SocialButtonsContainer>
                   <Form onSubmit={validateAndRegister}>
                     <Input id="f_name" type="text" placeholder="First Name"/>
                     <Input id="l_name" type="text" placeholder="Last Name"/>
