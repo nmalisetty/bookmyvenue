@@ -1,0 +1,14 @@
+{
+  "status": true,
+  "data": {
+    "user": [
+      {
+        "user_name": "malisetty",
+        "email": "nikhil.malisetty@gmail.com",
+        "first_name": "Nikhil",
+        "last_name": "Malisetty",
+        "phone_no": "8128911101"
+      }
+    ]
+  }
+}

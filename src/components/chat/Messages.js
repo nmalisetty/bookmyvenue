@@ -105,7 +105,7 @@ export default (props) => {
                     placeholder="Type message"
                 />
                 <div onClick={() => sendChat(props.fromUser, props.toUser, document.getElementById('chat-message').value)}>
-                    <a className="ms-3" href="#">
+                    <a className="ms-3" href="src/components/chat/Messages#">
                         <MDBIcon fas icon="paper-plane" />
                     </a>
                 </div>

@@ -9,6 +9,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { useNavigate } from "react-router-dom";
+import * as SignUpResponse from "../data/signup.json";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -38,46 +39,16 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
 `;
 
-const clientId = "931874802638-1fi5jqm3olebo9qonvmhb2mvf5g3t6r8.apps.googleusercontent.com";
+const clientId = "CLIENT_ID_GOES_HERE";
 
 let validateAndRegister = async (e) => {
   e.preventDefault();
-  const f_name = document.getElementById("f_name").value;
-  const l_name = document.getElementById("l_name").value;
-  const email = document.getElementById("email").value;
-  const m_number = document.getElementById("m_number").value;
-  const u_name = document.getElementById("u_name").value;
-  const pass = document.getElementById("pass").value;
-  const c_pass = document.getElementById("c_pass").value;
-  const roles = document.getElementsByName("role");
-  let role = "USER"
-  for (let i = 0; i < roles.length; i++) {
-    if (roles[i].checked) {
-      role = roles[i].value;
-    }
-  }
-  if (pass === c_pass) {
-    let response = await fetch('http://localhost:5000/user/register', {
-      method: 'POST',
-      body: JSON.stringify({
-        "first_name" : f_name,
-        "last_name" : l_name,
-        "email" : email,
-        "phone_no" : m_number,
-        "user_name" : u_name,
-        "password" : pass,
-        "role" : role
-      })
-    });
-    let jsonResponse = await response.json();
-    if (jsonResponse.status) {
-      alert("User registered successfully");
-      window.location.href = "/login";
-    } else {
-      alert("There was an error when creating your account");
-    }
+  let jsonResponse = SignUpResponse;
+  if (jsonResponse.status) {
+    alert("User registered successfully");
+    window.location.href = "/login";
   } else {
-    alert("Passwords don't match");
+    alert("There was an error when creating your account");
   }
 }
 

@@ -24,9 +24,9 @@ export default () => {
               <LogoText>BookMyVenue</LogoText>
             </LogoContainer>
             <LinksContainer>
-              <Link href="/">Home</Link>
-              <Link href="#">About</Link>
-              <Link href="#">Contact Us</Link>
+              <Link href="/src/pages">Home</Link>
+              <Link href="src/components/footers/Footer#">About</Link>
+              <Link href="src/components/footers/Footer#">Contact Us</Link>
             </LinksContainer>
             <CopyrightText>
               &copy; Copyright 2022, BookMyVenue. All Rights Reserved.

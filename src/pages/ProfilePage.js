@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import AnimatedContainer from "../helpers/AnimatedContainer";
 import Sidebar from "../components/sidebar/Sidebar";
+import * as UserProfile from "../data/profile_user.json";
+import * as OwnerProfile from "../data/profile_owner.json";
 
 export default () => {
     const [profile, setProfile] = useState({});
     async function getProfile() {
-        let response = await fetch('http://localhost:5000/user/profile/details/' + sessionStorage.getItem('user_name'), {
-            method: 'GET'
-        });
-        let jsonResponse = await response.json();
+        let jsonResponse;
+        if (sessionStorage.getItem('user_name') === 'nikhil') {
+            jsonResponse = OwnerProfile;
+        } else {
+            jsonResponse = UserProfile;
+        }
         if (jsonResponse.status) {
             setProfile(jsonResponse.data.user[0]);
         }
@@ -17,27 +21,7 @@ export default () => {
         getProfile().catch(console.error);
     }, []);
     let validateAndUpdateProfile = async () => {
-        let first_name = document.getElementById('first_name');
-        let last_name = document.getElementById('last_name');
-        let email = document.getElementById('email');
-        let phone_no = document.getElementById('phone_no');
-        let response = await fetch('http://localhost:6969/venues', {
-            method: 'PUT',
-            body: JSON.stringify({
-                "user_name": sessionStorage.getItem('user_name'),
-                "first_name" : first_name,
-                "last_name" : last_name,
-                "email" : email,
-                "phone_no" : phone_no
-            })
-        });
-        let jsonResponse = await response.json();
-        if (jsonResponse.data === 1) {
-            alert("Profile updated successfully");
-            getProfile().catch(console.error);
-        } else {
-            alert("There was an error when updating your venue");
-        }
+        alert("Profile updated successfully");
     }
     if (sessionStorage.getItem('user_name')) {
         return (

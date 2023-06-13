@@ -55,7 +55,7 @@ export default function Chat() {
                                                         <div onClick={() => setToUser(user.user)}>
                                                             <li className="p-2 border-bottom">
                                                                 <a
-                                                                    href="#"
+                                                                    href="src/components/chat/Chat#"
                                                                     className="d-flex justify-content-between"
                                                                 >
                                                                     <div className="d-flex flex-row">
@@ -72,7 +72,7 @@ export default function Chat() {
                                                         <div onClick={() => setToUser(user.user)}>
                                                             <li className="p-2">
                                                                 <a
-                                                                    href="#"
+                                                                    href="src/components/chat/Chat#"
                                                                     className="d-flex justify-content-between"
                                                                 >
                                                                     <div className="d-flex flex-row">

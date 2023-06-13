@@ -6,6 +6,8 @@ import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
 import loginpageBg from "../images/login-bg.png";
 import {ReactComponent as LoginIcon} from "feather-icons/dist/icons/log-in.svg";
+import * as LoginResponseUser from '../data/login_user.json';
+import * as LoginResponseOwner from '../data/login_owner.json';
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -36,15 +38,12 @@ const IllustrationImage = styled.div`
 let checkIfUserIsLoggedIn = async (e) => {
   e.preventDefault();
   let u_name = document.getElementById("u_name").value;
-  let password = document.getElementById("password").value;
-  let response = await fetch('http://localhost:5000/user/login', {
-    method: 'POST',
-    body: JSON.stringify({
-      "user_name" : u_name,
-      "password" : password
-    })
-  });
-  let jsonResponse = await response.json();
+  let jsonResponse;
+  if (u_name === "nikhil") {
+    jsonResponse = LoginResponseOwner;
+  } else {
+    jsonResponse = LoginResponseUser;
+  }
   if (jsonResponse.status) {
     sessionStorage.setItem('user_name', jsonResponse.data.data.user_name);
     sessionStorage.setItem('role', jsonResponse.data.data.role);

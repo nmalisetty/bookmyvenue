@@ -2,16 +2,16 @@ const userService = require('../services/user.service');
 const profileService = require('../services/profile.service');
 const forgotPasswordService = require('../services/forgotpassword.service');
 const bcrypt = require('bcryptjs');
-const { Client } = require('@duosecurity/duo_universal');
+// const { Client } = require('@duosecurity/duo_universal');
 
 const { successResponse, errorResponse } = require('../commons/response.util');
 
-const duoClient = new Client({
-    clientId: 'CLIENT_ID_HERE',
-    clientSecret: 'API_KEY_HERE',
-    apiHost: 'URL_HERE',
-    redirectUrl: 'http://localhost:3000/profile',
-});
+// const duoClient = new Client({
+//     clientId: 'CLIENT_ID_HERE',
+//     clientSecret: 'API_KEY_HERE',
+//     apiHost: 'URL_HERE',
+//     redirectUrl: 'http://localhost:3000/profile',
+// });
 
 const registerUser = async function(req, res) {
 
@@ -106,14 +106,15 @@ const loginUser = async function (req, res) {
         let role_id = hash.role_id;
         let role = await userService.getRole(role_id);
 
-        await duoClient.healthCheck();
+        // await duoClient.healthCheck();
         let resObj = {};
         // Load hash from your password DB.
         bcrypt.compare(password, hash.e_pass).then((response) => {
             if (response === true) {
                 try {
-                    const state = duoClient.generateState();
-                    const url = duoClient.createAuthUrl(user_name, state);
+                    // const state = duoClient.generateState();
+                    // const url = duoClient.createAuthUrl(user_name, state);
+                    const url = "/profile";
                     resObj["status"] = true;
                     resObj["data"] = {"user_name": user_name, "role": role, "url": url};
 
