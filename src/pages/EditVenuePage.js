@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import AnimatedContainer from "../helpers/AnimatedContainer";
 import Sidebar from "../components/sidebar/Sidebar";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 export default () => {
+    const navigate = useNavigate();
     const [venue, setVenue] = useState({});
     const [category, setCategory] = useState('');
     const [avail, setAvail] = useState('');
@@ -28,58 +30,6 @@ export default () => {
         }
         getVenueDetails().catch(console.error);
     }, []);
-    let deleteVenue = async () => {
-        let response = await fetch('http://localhost:6969/venues/' + sessionStorage.getItem('editVenueId'), {
-            method: 'DELETE'
-        });
-        let jsonResponse = await response.json();
-        if (jsonResponse.status) {
-            alert('Venue deleted successfully');
-            window.location.href = "/myvenues";
-        }
-    }
-    let validateAndUpdateVenue = async () => {
-        const title = document.getElementById("title").value;
-        const price = document.getElementById("price").value;
-        const capacity = document.getElementById("capacity").value;
-        const address = document.getElementById("address").value;
-        const created_by = sessionStorage.getItem("user_name");
-        const city = document.getElementById("city").value;
-        const state = document.getElementById("state").value;
-        const zipcode = document.getElementById("zipcode").value;
-        const phone_number = document.getElementById("phone_number").value;
-        const description = document.getElementById("description").value;
-        const venue_category = category;
-        const rating = '0';
-        const availability = avail;
-        let response = await fetch('http://localhost:6969/venues', {
-            method: 'PUT',
-            body: JSON.stringify({
-                "id": sessionStorage.getItem('editVenueId'),
-                "name" : title,
-                "price" : price,
-                "capacity" : capacity,
-                "address" : address,
-                "created_by" : created_by,
-                "city" : city,
-                "state" : state,
-                "zipcode": zipcode,
-                "phone_number": phone_number,
-                "description": description,
-                "category": venue_category,
-                "rating": rating,
-                "is_available": availability
-            })
-        });
-        let jsonResponse = await response.json();
-        console.log(jsonResponse.data.details);
-        if (jsonResponse.status) {
-            alert("Venue updated successfully");
-            window.location.href = "/myvenues";
-        } else {
-            alert("There was an error when updating your venue");
-        }
-    }
     if (sessionStorage.getItem('user_name')) {
         return (
             <div className="bg-blueGray-600">
@@ -96,14 +46,20 @@ export default () => {
                                             <button
                                                 className="ml-auto bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                                                 type="button"
-                                                onClick={deleteVenue}
+                                                onClick={() => {
+                                                    alert('Venue deleted successfully');
+                                                    navigate('/myvenues')
+                                                }}
                                             >
                                                 Delete
                                             </button>
                                             <button
                                                 className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                                                 type="button"
-                                                onClick={validateAndUpdateVenue}
+                                                onClick={() => {
+                                                    alert("Venue updated successfully");
+                                                    navigate('/myvenues')
+                                                }}
                                             >
                                                 Update
                                             </button>
@@ -335,6 +291,6 @@ export default () => {
             </div>
         );
     } else {
-        window.location.href = '/login';
+        navigate('/login');
     }
 }

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/footers/Footer";
 import Map from "../components/map/Map";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField} from '@mui/material';
@@ -16,6 +17,7 @@ let getImageFromResults = (id, images) => {
 }
 
 export default () => {
+    const navigate = useNavigate();
     const [venue, setVenue] = useState({});
     const [open, setOpen] = useState(false);
     const [bookmarked, setBookmarked] = useState(false);
@@ -147,7 +149,7 @@ export default () => {
                                                         className="bg-purple-500 active:bg-lightBlue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                                                         type="button"
                                                         onClick={() => {
-                                                            window.location.href = "/reserve"
+                                                            navigate('/reserve')
                                                         }}
                                                     >
                                                         Reserve
@@ -279,6 +281,6 @@ export default () => {
             </div>
         );
     } else {
-        window.location.href = '/login';
+        navigate('/login');
     }
 }

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import AnimatedContainer from "../helpers/AnimatedContainer";
 import Sidebar from "../components/sidebar/Sidebar";
 
@@ -48,6 +49,7 @@ const CardContent = tw.p`mt-1 text-sm font-medium text-gray-600`;
 const CardPrice = tw.p`mt-4 text-xl font-bold`;
 
 export default () => {
+    const navigate = useNavigate();
     function getImageFromResults(id, images) {
         if (images.length > 0) {
             return 'http://localhost:6969/images/' + id + '/' + images[0]['image_name'];
@@ -152,6 +154,6 @@ export default () => {
             </div>
         );
     } else {
-        window.location.href = '/login';
+        navigate('/login');
     }
 }

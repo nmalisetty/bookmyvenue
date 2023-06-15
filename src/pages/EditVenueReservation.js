@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/footers/Footer";
 import moment from "moment";
 import TextField from '@mui/material/TextField';
@@ -14,6 +15,7 @@ const isBooked = (date) => {
 };
 
 export default () => {
+    const navigate = useNavigate();
     const [date, setDate] = useState(moment());
     const [startTime, setStartTime] = useState();
     const [endTime, setEndTime] = useState();
@@ -85,39 +87,6 @@ export default () => {
         }
         else return '';
     }
-    let validateAndUpdateReservation = async () => {
-        const event_name = document.getElementById("event_name").value;
-        const expected_no_of_people = document.getElementById("expected_no_of_people").value;
-        const description = document.getElementById("description").value;
-        const user_id = sessionStorage.getItem("user_name");
-        const venue_id = sessionStorage.getItem("venueId");
-        const is_cancelled = '0';
-        const start_time = moment(startTime).format('hh:mm a');
-        const end_time = moment(endTime).format('hh:mm a');
-        const event_date = moment(date).format('YYYY-MM-DD');
-        let response = await fetch('http://localhost:6969/reservations', {
-            method: 'PUT',
-            body: JSON.stringify({
-                "reservation_id": sessionStorage.getItem('editReservationId'),
-                "venue_id": venue_id,
-                "user_id": user_id,
-                "event_name": event_name,
-                "expected_no_of_people": expected_no_of_people,
-                "date": event_date,
-                "start_time": start_time,
-                "end_time": end_time,
-                "description": description,
-                "is_cancelled": is_cancelled
-            })
-        });
-        let jsonResponse = await response.json();
-        if (jsonResponse.status) {
-            alert("Reservation edited successfully");
-            window.location.href = "/reservations";
-        } else {
-            alert("There was an error when editing the reservation");
-        }
-    }
     if (sessionStorage.getItem('user_name')) {
         return (
             <div>
@@ -176,7 +145,10 @@ export default () => {
                                                 <button
                                                     className="bg-purple-500 active:bg-lightBlue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                                                     type="button"
-                                                    onClick={validateAndUpdateReservation}
+                                                    onClick={() => {
+                                                        alert("Reservation edited successfully");
+                                                        navigate('/reservations')
+                                                    }}
                                                 >
                                                     Submit
                                                 </button>
@@ -373,6 +345,6 @@ export default () => {
 
         );
     } else {
-        window.location.href = '/login';
+        navigate('/login');
     }
 }

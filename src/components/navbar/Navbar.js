@@ -1,5 +1,6 @@
 import React from 'react';
 import tw from "twin.macro";
+import { useNavigate } from "react-router-dom";
 
 const NavLink = tw.a`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
@@ -8,6 +9,7 @@ const NavLink = tw.a`
 `;
 
 export default () => {
+    const navigate = useNavigate();
     return (
         <div>
             <nav className="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
@@ -22,7 +24,10 @@ export default () => {
                         <button
                             className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => {window.location.href = '/logout'}}
+                            onClick={() => {
+                                sessionStorage.removeItem('user_name');
+                                navigate('/login')
+                            }}
                         >
                             Logout
                         </button>

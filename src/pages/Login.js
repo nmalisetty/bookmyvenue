@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import AnimatedContainer from "../helpers/AnimatedContainer.js";
 import {Container as ContainerBase} from "../components/layouts/Layouts";
 import tw from "twin.macro";
@@ -35,24 +36,6 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
 `;
 
-let checkIfUserIsLoggedIn = async (e) => {
-  e.preventDefault();
-  let u_name = document.getElementById("u_name").value;
-  let jsonResponse;
-  if (u_name === "nikhil") {
-    jsonResponse = LoginResponseOwner;
-  } else {
-    jsonResponse = LoginResponseUser;
-  }
-  if (jsonResponse.status) {
-    sessionStorage.setItem('user_name', jsonResponse.data.data.user_name);
-    sessionStorage.setItem('role', jsonResponse.data.data.role);
-    window.location.href = jsonResponse.data.data.url;
-  } else {
-    alert("Please check your credentials and try again");
-  }
-}
-
 export default ({
                   headingText = "Sign In",
                   loginPageBgSrc = loginpageBg,
@@ -61,46 +44,63 @@ export default ({
                   forgotPasswordUrl = "/forgotpassword",
                   signupUrl = "/signup",
 
-                }) => (
-    <AnimatedContainer>
-      <Container>
-        <Content>
-          <MainContainer>
-            <MainContent>
-              <Heading>{headingText}</Heading>
-              <FormContainer>
-                <Form onSubmit={checkIfUserIsLoggedIn}>
-                  <Input id="u_name" type="text" placeholder="Username"/>
-                  <Input id="password" type="password" placeholder="Password"/>
-                  <SubmitButton type="submit">
-                    <SubmitButtonIcon className="icon"/>
-                    <span className="text">{submitButtonText}</span>
-                  </SubmitButton>
-                  <br />
-                  <ReCAPTCHA sitekey="6Le4eVQiAAAAAN0T8QckutpehO_OhUpwM9IRnICW" />
-                  <br />
-                  <p tw="mt-6 text-xs text-gray-600 text-center">
-                    <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
-                      Forgot Password?
-                    </a>
-                  </p>
-                  <br />
-                  <p tw="mt-8 text-sm text-gray-600 text-center">
-                    Don't have an account?{" "}
-                    <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
-                      Sign Up
-                    </a>
-                  </p>
-                </Form>
+                }) => {
+  const navigate = useNavigate();
+  return (
+      <AnimatedContainer>
+        <Container>
+          <Content>
+            <MainContainer>
+              <MainContent>
+                <Heading>{headingText}</Heading>
+                <FormContainer>
+                  <Form onSubmit={() => {
+                    let u_name = document.getElementById("u_name").value;
+                    let jsonResponse;
+                    if (u_name === "nikhil") {
+                      jsonResponse = LoginResponseOwner;
+                    } else {
+                      jsonResponse = LoginResponseUser;
+                    }
+                    if (jsonResponse.status) {
+                      sessionStorage.setItem('user_name', jsonResponse.data.data.user_name);
+                      sessionStorage.setItem('role', jsonResponse.data.data.role);
+                      navigate(jsonResponse.data.data.url);
+                    } else {
+                      alert("Please check your credentials and try again");
+                    }}}>
+                    <Input id="u_name" type="text" placeholder="Username"/>
+                    <Input id="password" type="password" placeholder="Password"/>
+                    <SubmitButton type="submit">
+                      <SubmitButtonIcon className="icon"/>
+                      <span className="text">{submitButtonText}</span>
+                    </SubmitButton>
+                    <br />
+                    <ReCAPTCHA sitekey="6Le4eVQiAAAAAN0T8QckutpehO_OhUpwM9IRnICW" />
+                    <br />
+                    <p tw="mt-6 text-xs text-gray-600 text-center">
+                      <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
+                        Forgot Password?
+                      </a>
+                    </p>
+                    <br />
+                    <p tw="mt-8 text-sm text-gray-600 text-center">
+                      Don't have an account?{" "}
+                      <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
+                        Sign Up
+                      </a>
+                    </p>
+                  </Form>
 
 
-              </FormContainer>
-            </MainContent>
-          </MainContainer>
-          <IllustrationContainer>
-            <IllustrationImage imageSrc={loginPageBgSrc} />
-          </IllustrationContainer>
-        </Content>
-      </Container>
-    </AnimatedContainer>
-);
+                </FormContainer>
+              </MainContent>
+            </MainContainer>
+            <IllustrationContainer>
+              <IllustrationImage imageSrc={loginPageBgSrc} />
+            </IllustrationContainer>
+          </Content>
+        </Container>
+      </AnimatedContainer>
+  );
+}

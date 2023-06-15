@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import AnimatedContainer from "../helpers/AnimatedContainer";
 import Sidebar from "../components/sidebar/Sidebar";
-import {Select, MenuItem, FormControl}from "@mui/material";
+import { Select, MenuItem, FormControl }from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 export default () => {
+    const navigate = useNavigate();
     const [category, setCategory] = useState('weddings');
     const [avail, setAvail] = useState('1');
     const handleCategoryChange = (event) => {
@@ -13,57 +15,6 @@ export default () => {
     const handleAvailChange = (event) => {
         setAvail(event.target.value);
     };
-
-    let validateAndAddVenue = async () => {
-        const title = document.getElementById("title").value;
-        const price = document.getElementById("price").value;
-        const capacity = document.getElementById("capacity").value;
-        const address = document.getElementById("address").value;
-        const created_by = sessionStorage.getItem("user_name");
-        const city = document.getElementById("city").value;
-        const state = document.getElementById("state").value;
-        const zipcode = document.getElementById("zipcode").value;
-        const phone_number = document.getElementById("phone_number").value;
-        const description = document.getElementById("description").value;
-        const venue_category = category;
-        const rating = '0';
-        const availability = avail;
-        let response = await fetch('http://localhost:6969/venues', {
-            method: 'POST',
-            body: JSON.stringify({
-                "name" : title,
-                "price" : price,
-                "capacity" : capacity,
-                "address" : address,
-                "created_by" : created_by,
-                "city" : city,
-                "state" : state,
-                "zipcode": zipcode,
-                "phone_number": phone_number,
-                "description": description,
-                "category": venue_category,
-                "rating": rating,
-                "is_available": availability
-            })
-        });
-        let jsonResponse = await response.json();
-        if (jsonResponse.status) {
-            let body = new FormData();
-            let venue_image = document.forms['image-form']['venue-image'].files[0];
-            body.append('image', venue_image)
-            let imageResponse = await fetch('http://localhost:6969/venues/' + jsonResponse.data.details.venue_id + '/images', {
-                method: 'POST',
-                body: body
-            })
-            let jsonImageResponse = await imageResponse.json();
-            if (jsonImageResponse.status) {
-                alert("Venue added successfully");
-                window.location.href = "/myvenues";
-            }
-        } else {
-            alert("There was an error when creating your venue");
-        }
-    }
 
     if (sessionStorage.getItem('user_name')) {
         return (
@@ -81,7 +32,10 @@ export default () => {
                                             <button
                                                 className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                                                 type="button"
-                                                onClick={validateAndAddVenue}
+                                                onClick={() => {
+                                                    alert("Venue added successfully");
+                                                    navigate('/myvenues')
+                                                }}
                                             >
                                                 Submit
                                             </button>
@@ -312,6 +266,6 @@ export default () => {
             </div>
         );
     } else {
-        window.location.href = '/login';
+        navigate('/login');
     }
 }

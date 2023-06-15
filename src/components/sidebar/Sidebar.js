@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default (props) => {
     return (
@@ -78,7 +78,7 @@ export default (props) => {
                                 <li className="items-center">
                                     <Link
                                         className={"text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-lightBlue-600"}
-                                        to="/logout"
+                                        to="/login"
                                     >
                                         <i
                                             className={"fas fa-power-off mr-2 text-sm opacity-75"}
@@ -177,7 +177,7 @@ export default (props) => {
                                 <li className="items-center">
                                     <Link
                                         className={"text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-lightBlue-600"}
-                                        to="/logout"
+                                        to="/login"
                                     >
                                         <i
                                             className={"fas fa-power-off mr-2 text-sm opacity-75"}

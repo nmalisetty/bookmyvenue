@@ -1,7 +1,7 @@
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
 
 const Header = tw.header`
   flex justify-between items-center
@@ -35,15 +35,24 @@ export const DesktopNavLinks = tw.nav`
   hidden lg:flex flex-1 justify-between items-center
 `;
 
-export default ({roundedHeaderButton = false, logoLink, links, className, collapseBreakpointClass = "lg"}) => {
+const Button = tw.button``;
 
+export default ({roundedHeaderButton = false, logoLink, links, className, collapseBreakpointClass = "lg"}) => {
+  const navigate = useNavigate();
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/#">About</NavLink>
-      <NavLink href="/#">Contact Us</NavLink>
+      <NavLink href="#">About</NavLink>
+      <NavLink href="#">Contact Us</NavLink>
       {sessionStorage.getItem('user_name') ?
-          <PrimaryLink css={roundedHeaderButton && tw`rounded-full`} href="/logout">Logout</PrimaryLink> :
-          <PrimaryLink css={roundedHeaderButton && tw`rounded-full`} href="/login">Login</PrimaryLink>
+          <PrimaryLink css={roundedHeaderButton && tw`rounded-full`} href="#">
+            <Button onClick={() => {
+              sessionStorage.removeItem('user_name');
+              navigate('/login')
+            }}>Logout</Button>
+          </PrimaryLink> :
+          <PrimaryLink css={roundedHeaderButton && tw`rounded-full`} href="#">
+            <Button onClick={() => navigate('/login')}>Login</Button>
+          </PrimaryLink>
       }
     </NavLinks>
   ];

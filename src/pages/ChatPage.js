@@ -2,8 +2,10 @@ import React from "react";
 import AnimatedContainer from "../helpers/AnimatedContainer";
 import Chat from "../components/chat/Chat";
 import Sidebar from "../components/sidebar/Sidebar";
+import { useNavigate } from "react-router-dom";
 
 export default () => {
+    const navigate = useNavigate();
     if (sessionStorage.getItem('user_name')) {
         return (
             <div className="bg-blueGray-600">
@@ -16,6 +18,6 @@ export default () => {
             </div>
         );
     } else {
-        window.location.href = '/login';
+        navigate('/login');
     }
 }

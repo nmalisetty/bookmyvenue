@@ -62,7 +62,7 @@ export default () => {
                                                                     type="button"
                                                                     onClick={() => {
                                                                         sessionStorage.setItem('editReservationId', reservation.id);
-                                                                        window.location.href = '/editreservation';
+                                                                        navigate('/editreservation');
                                                                     }}
                                                                 >
                                                                     Edit

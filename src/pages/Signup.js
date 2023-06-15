@@ -6,7 +6,7 @@ import styled from "styled-components";
 import signupPageBg from "../images/signup-bg.png";
 import {ReactComponent as SignUpIcon} from "feather-icons/dist/icons/user-plus.svg";
 import ReCAPTCHA from "react-google-recaptcha";
-import * as SignUpResponse from "../data/signup.json";
+import { useNavigate } from "react-router-dom";
 
 const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
@@ -34,18 +34,8 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-lg bg-contain bg-center bg-no-repeat`}
 `;
 
-let validateAndRegister = async (e) => {
-  e.preventDefault();
-  let jsonResponse = SignUpResponse;
-  if (jsonResponse.status) {
-    alert("User registered successfully");
-    window.location.href = "/login";
-  } else {
-    alert("There was an error when creating your account");
-  }
-}
-
 export default () => {
+  const navigate = useNavigate();
   const headingText = "Sign Up",
       signupPageBgSrc = signupPageBg,
       submitButtonText = "Sign Up",
@@ -61,7 +51,7 @@ export default () => {
               <MainContent>
                 <Heading>{headingText}</Heading>
                 <FormContainer>
-                  <Form onSubmit={validateAndRegister}>
+                  <Form onSubmit={() => {alert("User registered successfully"); navigate('/login')}}>
                     <Input id="f_name" type="text" placeholder="First Name"/>
                     <Input id="l_name" type="text" placeholder="Last Name"/>
                     <Input id="m_number"  type="text" placeholder="Mobile Number"/>

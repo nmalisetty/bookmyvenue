@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import AnimatedContainer from "../helpers/AnimatedContainer";
 import Sidebar from "../components/sidebar/Sidebar";
+import { useNavigate } from "react-router-dom";
 import * as UserProfile from "../data/profile_user.json";
 import * as OwnerProfile from "../data/profile_owner.json";
 
 export default () => {
+    const navigate = useNavigate();
     const [profile, setProfile] = useState({});
     async function getProfile() {
         let jsonResponse;
@@ -151,6 +153,6 @@ export default () => {
             </div>
         );
     } else {
-        window.location.href = '/login';
+        navigate('/login');
     }
 }
